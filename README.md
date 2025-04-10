@@ -9,6 +9,7 @@
 
 <br>
 GASP help you by generating boilerplate, making folder structure based on the architect of your project,config files, generating backend components such as entities,routers, middlewares etc.
+
 <br>
 <br>
 
@@ -61,17 +62,17 @@ We’d love to have your contributions! Here’s how you can help:
 
 1. Fork this repository.
 2. Create a new branch for your changes:
-  
+  ```
    git checkout -b feature/your-feature-name
-   
+  ```
 3. Make your changes and commit them:
-  
+  ```
    git commit -m "Add your message here"
-   
+  ```
 4. Push to your fork:
-  
+  ```
    git push origin feature/your-feature-name
-   
+  ```
 5. Submit a pull request to the main repository.
 
 Please follow the project’s coding guidelines and include tests where applicable.
