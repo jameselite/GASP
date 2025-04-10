@@ -23,6 +23,11 @@ func MakeConfig(dbNumber int64, dbname string, dbpass string, dbuser string) (st
 		return "", errors.New(cmdEnvErr.Error())
 	}
 
+	_, envFileErr := os.Create(".env")
+	if envFileErr != nil {
+		return "", errors.New(envFileErr.Error())
+	}
+
 	switch dbNumber {
 
 	case 1:
