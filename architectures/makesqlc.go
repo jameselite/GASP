@@ -53,6 +53,9 @@ func MakeSqlc(dbnumber int64, dbdir string, projectname string) (string, error) 
 		if writeErr != nil {
 			return "", errors.New(writeErr.Error())
 		}
+
+	default:
+		return "", errors.New("sorry, your database is not supported")
 	}
 
 	return "Sqlc installed and ready to use !", nil
