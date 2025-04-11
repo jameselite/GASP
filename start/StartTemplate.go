@@ -30,7 +30,7 @@ func main() {
 		return
 	}
 
-	// GASP: register your routers here if you want to do it manually:
+	// GASP: register your routers here if you want to do it manually, example:
 	// routers.AuthRouter(app)
 
 	app.Run(port)
