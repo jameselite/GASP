@@ -21,11 +21,13 @@ func MakeRouter(group_path string, arch int64) (string, error) {
 
 	case 1: // layered 
 
-	var routerFilePath string = fmt.Sprintf("internal/routers/%s", group_path)
+	var routerFilePath string = fmt.Sprintf("internal/routers/%s.go", group_path)
 	routerFile, routerFileErr := os.Create(routerFilePath)
 	if routerFileErr != nil {
 		return "", errors.New(routerFileErr.Error())
 	}
+
+	defer routerFile.Close()
 
 	_, writeRouterErr := routerFile.WriteString(routerContent)
 	if writeRouterErr != nil {
@@ -35,11 +37,13 @@ func MakeRouter(group_path string, arch int64) (string, error) {
 
 	case 2: // clean
 
-	var routerFilePath string = fmt.Sprintf("delivery/routers/%s", group_path)
+	var routerFilePath string = fmt.Sprintf("delivery/routers/%s.go", group_path)
 	routerFile, routerFileErr := os.Create(routerFilePath)
 	if routerFileErr != nil {
 		return "", errors.New(routerFileErr.Error())
 	}
+
+	defer routerFile.Close()
 
 	_, writeRouterErr := routerFile.WriteString(routerContent)
 	if writeRouterErr != nil {
@@ -48,5 +52,5 @@ func MakeRouter(group_path string, arch int64) (string, error) {
 
 	}
 
-	return fmt.Sprintf(group_path, "router created !"), nil
+	return group_path + " router created !", nil
 }

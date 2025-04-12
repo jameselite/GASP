@@ -21,6 +21,8 @@ func MakeStart(projectName string) (string, error) {
 		return "", errors.New(makeMainErr.Error())
 	}
 	
+	defer mainFile.Close()
+	
 	var mainContent string = fmt.Sprintf(StartTemplate, projectName + "/config")
 
 	_, writeMainErr := mainFile.WriteString(mainContent)
