@@ -6,7 +6,7 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
-type tomlContent struct {
+type TomlContent struct {
 	Projectname string `toml:"projectname"`
 	Framework string `toml:"framework"`
 	Architecture string `toml:"architecture"`
@@ -16,7 +16,7 @@ type tomlContent struct {
 
 func MakegaspTOML(projectname string, framework string, arch string, version string, database string) (string, error) {
 
-	var content tomlContent
+	var content TomlContent
 
 	content.Projectname = projectname
 	content.Framework = framework
