@@ -1,0 +1,5 @@
+projectname = "myproject"
+framework = "gin"
+architecture = "layered"
+version = "1.2.0"
+database = "postgres"
