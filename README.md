@@ -1,3 +1,5 @@
+<br>
+
 <h1> GASP: Golang CLI Assistant for backend projects ! </h1>
 
 ![License](https://img.shields.io/badge/license-MIT-cyan)  ![License](https://img.shields.io/badge/Version-in_development-black)   ![License](https://img.shields.io/badge/Maintainer-Soroush_GH-blue)  ![License](https://img.shields.io/badge/status-active-purple)
