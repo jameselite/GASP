@@ -3,11 +3,66 @@ package routers
 import (
 	"errors"
 	"fmt"
+	"goTmp/start"
 	"os"
 	"strings"
 )
 
-func MakeRouter(group_path string, arch int64) (string, error) {
+func AddRouterToMain(group_path string) error {
+
+	rawContent, readErr := os.ReadFile("cmd/main.go")
+	
+	if readErr != nil {
+		return errors.New(readErr.Error())
+	}
+
+	splitedContent := strings.Split(string(rawContent), "\n")
+
+	project, errToml := start.ParseTOML()
+	if errToml != nil {
+		return errToml
+	}
+
+	var updatedContent []string
+
+	for _, line := range splitedContent {
+
+		if strings.Contains(line, "import (") {
+			updatedContent = append(updatedContent, line)
+			updatedContent = append(updatedContent, "")
+
+			switch project.Architecture {
+			case "layered":
+				updatedContent = append(updatedContent, "	"+project.Projectname + "/" + "internal" + "/routers")
+
+			case "clean":
+				updatedContent = append(updatedContent, "	" + project.Projectname + "/" + "delivery" + "/routers")
+			}
+			continue
+		}
+
+		if strings.Contains(line, "gin.Default()") {
+			updatedContent = append(updatedContent, line)
+			updatedContent = append(updatedContent, "")
+
+			updatedContent = append(updatedContent, "	router." + group_path + "(app)")
+			continue
+		}
+
+		updatedContent = append(updatedContent, line)
+	}
+
+	finalContent := strings.Join(updatedContent, "\n")
+
+	err := os.WriteFile("cmd/main.go", []byte(finalContent), 0644)
+	if err != nil {
+		return errors.New(err.Error())
+	}
+
+	return nil
+}
+
+func MakeRouter(group_path string) (string, error) {
 
 	var routerContent string = fmt.Sprintf(RouterTemplate, group_path, group_path)
 
@@ -17,12 +72,20 @@ func MakeRouter(group_path string, arch int64) (string, error) {
 		return "", errors.New("sorry, you can not have blank space as group path for your router")
 	}
 
-	switch arch {
+	project, tomlErr := start.ParseTOML()
 
-	case 1: // layered 
+	if tomlErr != nil {
+		return "", errors.New(tomlErr.Error())
+	}
+
+	switch project.Architecture {
+
+	case "layered":
 
 	var routerFilePath string = fmt.Sprintf("internal/routers/%s.go", group_path)
+
 	routerFile, routerFileErr := os.Create(routerFilePath)
+
 	if routerFileErr != nil {
 		return "", errors.New(routerFileErr.Error())
 	}
@@ -35,7 +98,7 @@ func MakeRouter(group_path string, arch int64) (string, error) {
 	}
 
 
-	case 2: // clean
+	case "clean":
 
 	var routerFilePath string = fmt.Sprintf("delivery/routers/%s.go", group_path)
 	routerFile, routerFileErr := os.Create(routerFilePath)
@@ -50,6 +113,11 @@ func MakeRouter(group_path string, arch int64) (string, error) {
 		return "", errors.New(writeRouterErr.Error())
 	}
 
+	}
+
+	addMainErr := AddRouterToMain(group_path)
+	if addMainErr != nil {
+		return "", errors.New(addMainErr.Error())
 	}
 
 	return group_path + " router created !", nil
