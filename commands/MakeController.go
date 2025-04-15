@@ -31,6 +31,8 @@ func MakeController(router string, path string, controllerName string, method st
 			return "", errors.New(makeErr.Error())
 		}
 
+		defer controller.Close()
+		
 		controllerContent := fmt.Sprintf(ControllerTemplate, controllerName)
 
 		_, writeErr := controller.WriteString(controllerContent)
@@ -102,6 +104,8 @@ func MakeController(router string, path string, controllerName string, method st
 		if makeErr != nil {
 			return "", errors.New(makeErr.Error())
 		}
+
+		defer controller.Close()
 
 		controllerContent := fmt.Sprintf(ControllerTemplate, controllerName)
 

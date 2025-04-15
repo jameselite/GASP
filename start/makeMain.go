@@ -11,6 +11,7 @@ func MakeStart(projectName string) (string, error) {
 
 	var ginInstall *exec.Cmd = exec.Command("go", "get", "github.com/gin-gonic/gin")
 
+	fmt.Println("Getting gin framework from : github.com/gin-gonic/gin")
 	var ginInstallErr error = ginInstall.Run()
 	if ginInstallErr != nil {
 		return "", errors.New(ginInstallErr.Error())
