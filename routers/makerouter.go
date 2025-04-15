@@ -3,6 +3,7 @@ package routers
 import (
 	"errors"
 	"fmt"
+	"goTmp/helper"
 	"goTmp/start"
 	"os"
 	"strings"
@@ -33,10 +34,12 @@ func AddRouterToMain(group_path string) error {
 
 			switch project.Architecture {
 			case "layered":
-				updatedContent = append(updatedContent, "	"+project.Projectname + "/" + "internal" + "/routers")
+				importString := fmt.Sprintf(`"%s/internal/routers"`, project.Projectname)
+				updatedContent = append(updatedContent, "	"+importString)
 
 			case "clean":
-				updatedContent = append(updatedContent, "	" + project.Projectname + "/" + "delivery" + "/routers")
+				importString := fmt.Sprintf(`"%s/internal/routers"`, project.Projectname)
+				updatedContent = append(updatedContent, "	" +importString)
 			}
 			continue
 		}
@@ -64,7 +67,7 @@ func AddRouterToMain(group_path string) error {
 
 func MakeRouter(group_path string) (string, error) {
 
-	var routerContent string = fmt.Sprintf(RouterTemplate, group_path, group_path)
+	var routerContent string = fmt.Sprintf(RouterTemplate, helper.CapitalizeFirstLetter(group_path), group_path)
 
 	var haveBlank bool = strings.Contains(group_path, " ")
 
