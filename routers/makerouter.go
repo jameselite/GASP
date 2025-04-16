@@ -67,18 +67,26 @@ func AddRouterToMain(group_path string) error {
 
 func MakeRouter(group_path string) (string, error) {
 
-	var routerContent string = fmt.Sprintf(RouterTemplate, helper.CapitalizeFirstLetter(group_path), group_path)
+	project, tomlErr := start.ParseTOML()
+
+	if tomlErr != nil {
+		return "", errors.New(tomlErr.Error())
+	}
+
+	var routerContent string
+
+	if project.Framework == "gin" {
+		routerContent = fmt.Sprintf(RouterTemplateGin, helper.CapitalizeFirstLetter(group_path), group_path)
+	}
+
+	if project.Framework == "fiber" {
+		routerContent = fmt.Sprintf(RouterTemplateFiber, helper.CapitalizeFirstLetter(group_path), group_path)
+	}
 
 	var haveBlank bool = strings.Contains(group_path, " ")
 
 	if haveBlank {
 		return "", errors.New("sorry, you can not have blank space as group path for your router")
-	}
-
-	project, tomlErr := start.ParseTOML()
-
-	if tomlErr != nil {
-		return "", errors.New(tomlErr.Error())
 	}
 
 	switch project.Architecture {

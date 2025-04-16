@@ -1,6 +1,6 @@
 package commands
 
-var MiddlewareTemplate string = 
+var MiddlewareTemplateGin string = 
 
 `
 package middlewares 
@@ -14,6 +14,24 @@ func %s() gin.HandlerFunc {
 
 
 		ctx.Next()
+	}
+}
+
+`
+
+var MiddlewareTemplateFiber string = 
+
+`
+package middlewares 
+
+import (
+	"github.com/gofiber/fiber/v2"
+)
+
+func %s() fiber.Handler {
+	return func(ctx *fiber.Ctx) error {
+
+		return ctx.Next()
 	}
 }
 

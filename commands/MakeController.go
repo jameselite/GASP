@@ -33,7 +33,15 @@ func MakeController(router string, path string, controllerName string, method st
 
 		defer controller.Close()
 		
-		controllerContent := fmt.Sprintf(ControllerTemplate, controllerName)
+		var controllerContent string
+
+		if project.Framework == "gin" {
+			controllerContent = fmt.Sprintf(ControllerTemplateGin, controllerName)
+		}
+
+		if project.Framework == "fiber" {
+			controllerContent = fmt.Sprintf(ControllerTemplateFiber, controllerName)
+		}
 
 		_, writeErr := controller.WriteString(controllerContent)
 
@@ -107,8 +115,16 @@ func MakeController(router string, path string, controllerName string, method st
 
 		defer controller.Close()
 
-		controllerContent := fmt.Sprintf(ControllerTemplate, controllerName)
+		var controllerContent string
 
+		if project.Framework == "gin" {
+			controllerContent = fmt.Sprintf(ControllerTemplateGin, controllerName)
+		}
+
+		if project.Framework == "fiber" {
+			controllerContent = fmt.Sprintf(ControllerTemplateFiber, controllerName)
+		}
+		
 		_, writeErr := controller.WriteString(controllerContent)
 
 		if writeErr != nil {

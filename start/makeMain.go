@@ -7,15 +7,9 @@ import (
 	"os/exec"
 )
 
-func MakeStart(projectName string) (string, error) {
+func MakeStart(projectName string, framework int64) (string, error) {
 
-	var ginInstall *exec.Cmd = exec.Command("go", "get", "github.com/gin-gonic/gin")
-
-	fmt.Println("Getting gin framework from : github.com/gin-gonic/gin")
-	var ginInstallErr error = ginInstall.Run()
-	if ginInstallErr != nil {
-		return "", errors.New(ginInstallErr.Error())
-	}
+	var frameworkInstall *exec.Cmd
 
 	mainFile, makeMainErr := os.Create("cmd/main.go")
 	if makeMainErr != nil {
@@ -23,10 +17,40 @@ func MakeStart(projectName string) (string, error) {
 	}
 	
 	defer mainFile.Close()
-	
-	var mainContent string = fmt.Sprintf(StartTemplate, projectName + "/config")
 
+	var mainContent string
+
+	var FrameworkInstallErr error
+
+	switch framework {
+
+	case 1: // gin
+		frameworkInstall = exec.Command("go", "get", "github.com/gin-gonic/gin")
+		fmt.Println("Getting gin framework from : github.com/gin-gonic/gin")
+		
+		mainContent = fmt.Sprintf(StartTemplateGin, projectName + "/config")
+
+		FrameworkInstallErr = frameworkInstall.Run()
+	
+		if FrameworkInstallErr != nil {
+			return "", errors.New(FrameworkInstallErr.Error())
+		}
+	case 2: // fiber
+		frameworkInstall = exec.Command("go", "get", "github.com/gofiber/fiber/v2")
+		fmt.Println("Getting Fiber framework from : github.com/gofiber/fiber/v2")
+
+		mainContent = fmt.Sprintf(StartTemplateFiber, projectName + "/config")
+
+		FrameworkInstallErr = frameworkInstall.Run()
+	
+		if FrameworkInstallErr != nil {
+			return "", errors.New(FrameworkInstallErr.Error())
+		}
+
+	}
+	
 	_, writeMainErr := mainFile.WriteString(mainContent)
+	
 	if writeMainErr != nil {
 		return "", errors.New(writeMainErr.Error())
 	}

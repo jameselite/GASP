@@ -1,6 +1,6 @@
 package commands
 
-var ControllerTemplate string = `
+var ControllerTemplateGin string = `
 package controllers
 
 import (
@@ -8,6 +8,20 @@ import (
 )
 
 func %s(ctx *gin.context) {
+
+
+
+}
+`
+
+var ControllerTemplateFiber string = `
+package controllers
+
+import (
+	"github.com/gofiber/fiber/v2"
+)
+
+func %s(ctx *fiber.Ctx) {
 
 
 

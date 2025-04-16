@@ -1,6 +1,6 @@
 package routers
 
-var RouterTemplate string = `
+var RouterTemplateGin string = `
 
 package routers
 
@@ -16,5 +16,24 @@ func %s(app *gin.Engine) {
 	}
 
 }
+	
+`
+
+var RouterTemplateFiber string = `
+
+package routers
+
+import (
+	"github.com/gofiber/fiber/v2"
+)
+
+func %s(app *fiber.App) {
+
+	{
+		router := app.Group("%s")
+
+	}
+}
+
 	
 `
