@@ -10,7 +10,7 @@
 #### Forgot the setup of your backend project in Go !
 
 <br>
-GASP help you by generating boilerplate, making folder structure based on the architect of your project,config files, generating backend components such as entities,routers, middlewares etc.
+GASP help you by generating boilerplate, making folder structure based on the architect of your project,config files, generating backend components such as controllers,routers, middlewares etc.
 
 <br>
 <br>
