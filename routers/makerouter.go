@@ -3,8 +3,8 @@ package routers
 import (
 	"errors"
 	"fmt"
-	"goTmp/helper"
-	"goTmp/start"
+	"github.com/jameselite/GASP/helper"
+	"github.com/jameselite/GASP/start"
 	"os"
 	"strings"
 )

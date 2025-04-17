@@ -3,8 +3,8 @@ package architectures
 import (
 	"errors"
 	"fmt"
-	configfile "goTmp/config_file"
-	"goTmp/start"
+	configfile "github.com/jameselite/GASP/config_file"
+	"github.com/jameselite/GASP/start"
 	"os"
 	"os/exec"
 )

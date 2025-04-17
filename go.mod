@@ -1,4 +1,4 @@
-module goTmp
+module github.com/jameselite/GASP
 
 go 1.24.1
 

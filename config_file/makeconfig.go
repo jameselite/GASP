@@ -3,7 +3,7 @@ package configfile
 import (
 	"errors"
 	"fmt"
-	"goTmp/start"
+	"github.com/jameselite/GASP/start"
 	"os"
 
 	"os/exec"
