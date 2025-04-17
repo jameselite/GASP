@@ -3,8 +3,8 @@ package commands
 import (
 	"errors"
 	"fmt"
-	"github.com/jameselite/GASP/helper"
-	"github.com/jameselite/GASP/start"
+	"github.com/jameselite/gasp/helper"
+	"github.com/jameselite/gasp/start"
 	"os"
 )
 

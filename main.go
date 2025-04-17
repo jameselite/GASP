@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/jameselite/GASP/architectures"
-	"github.com/jameselite/GASP/commands"
-	configfile "github.com/jameselite/GASP/config_file"
-	"github.com/jameselite/GASP/routers"
-	"github.com/jameselite/GASP/start"
+	"github.com/jameselite/gasp/architectures"
+	"github.com/jameselite/gasp/commands"
+	configfile "github.com/jameselite/gasp/config_file"
+	"github.com/jameselite/gasp/routers"
+	"github.com/jameselite/gasp/start"
 	"os"
 
 	"github.com/olekukonko/tablewriter"
