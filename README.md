@@ -66,7 +66,8 @@ gasp --help
 gasp generate router example_group
 ```
 
-2. group path means: the path that every controller in that router have it is called Grouping routes
+2. group path means: the path that every controller in that router have. 
+it is called Grouping routes
 
 <br>
 
