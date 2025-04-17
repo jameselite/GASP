@@ -61,12 +61,13 @@ gasp --help
 
 <h1> Tips </h1>
 1. in making a controller with "gasp generate controller", you MUST have a router, and you can make a router with:
+
 ```
 gasp generate router example_group
 ```
 
 2. group path means: the path that every controller in that router have it is called Grouping routes
- 
+
 <br>
 
 ## Contributing
