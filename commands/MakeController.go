@@ -83,6 +83,14 @@ func MakeController(router string, path string, controllerName string, method st
 				updatedContent = append(updatedContent, line)
 				updatedContent = append(updatedContent, "")
 
+				if project.Framework == "gin" {
+					method = strings.ToUpper(method)
+				}
+
+				if project.Framework == "fiber" {
+					method = helper.CapitalizeFirstLetter(method)
+				}
+
 				controllerString := fmt.Sprintf(`router.%s("%s", %s)`, method, path, "controllers." + controllerName)
 
 				updatedContent = append(updatedContent, "	" + controllerString)

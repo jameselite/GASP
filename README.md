@@ -2,7 +2,7 @@
 
 <h1> GASP: Golang CLI Assistant for backend projects ! </h1>
 
-![License](https://img.shields.io/badge/license-MIT-cyan)  ![License](https://img.shields.io/badge/Version-in_development-black)   ![License](https://img.shields.io/badge/Maintainer-Soroush_GH-blue)  ![License](https://img.shields.io/badge/status-active-purple)
+![License](https://img.shields.io/badge/license-MIT-cyan)  ![License](https://img.shields.io/badge/Version-1.0.0-black)   ![License](https://img.shields.io/badge/Maintainer-Soroush_GH-blue)  ![License](https://img.shields.io/badge/status-active-purple)
 
 
 <br>
@@ -35,13 +35,38 @@ To get started with this project, follow these steps:
   ```   
 
   <br>
-  
+
 ## Usage
 
 <br>
 
-##### Still in build
+1. Initialize a project with:
+```
+gasp init example_project
+```
 
+2. Move to the created directory
+
+3. Run start command to start the proccess of setup:
+```
+gasp start
+```
+
+4. if anything missed or you want to add it later you can use add commands, more information in:
+```
+gasp --help
+```
+
+5. generating backend components are also easy, just a few notes:
+
+<h1> Tips </h1>
+1. in making a controller with "gasp generate controller", you MUST have a router, and you can make a router with:
+```
+gasp generate router example_group
+```
+
+2. group path means: the path that every controller in that router have it is called Grouping routes
+ 
 <br>
 
 ## Contributing
