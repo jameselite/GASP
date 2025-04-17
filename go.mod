@@ -1,4 +1,4 @@
-module github.com/jameselite/GASP
+module github.com/jameselite/gasp
 
 go 1.24.1
 
