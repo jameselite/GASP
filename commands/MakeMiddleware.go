@@ -38,7 +38,7 @@ func MakeMiddleware(name string) (string, error) {
 
 	}
 
-	if project.Framework != "fiber" || project.Framework != "gin" {
+	if project.Framework != "fiber" && project.Framework != "gin" {
 		return "", errors.New("sorry, your framework is not supported")
 	}
  
