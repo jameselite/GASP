@@ -7,7 +7,13 @@ import (
 	"os/exec"
 )
 
-func MakeStart(projectName string, framework int64) (string, error) {
+func MakeStart() (string, error) {
+
+	project, tomlErr := ParseTOML()
+
+	if tomlErr != nil {
+		return "", errors.New(tomlErr.Error())
+	}
 
 	var frameworkInstall *exec.Cmd
 
@@ -22,24 +28,24 @@ func MakeStart(projectName string, framework int64) (string, error) {
 
 	var FrameworkInstallErr error
 
-	switch framework {
+	switch project.Framework {
 
-	case 1: // gin
+	case "gin": // gin
 		frameworkInstall = exec.Command("go", "get", "github.com/gin-gonic/gin")
 		fmt.Println("Getting gin framework from : github.com/gin-gonic/gin")
 		
-		mainContent = fmt.Sprintf(StartTemplateGin, projectName + "/config")
+		mainContent = fmt.Sprintf(StartTemplateGin, project.Projectname + "/config")
 
 		FrameworkInstallErr = frameworkInstall.Run()
 	
 		if FrameworkInstallErr != nil {
 			return "", errors.New(FrameworkInstallErr.Error())
 		}
-	case 2: // fiber
+	case "fiber": // fiber
 		frameworkInstall = exec.Command("go", "get", "github.com/gofiber/fiber/v2")
 		fmt.Println("Getting Fiber framework from : github.com/gofiber/fiber/v2")
 
-		mainContent = fmt.Sprintf(StartTemplateFiber, projectName + "/config")
+		mainContent = fmt.Sprintf(StartTemplateFiber, project.Projectname + "/config")
 
 		FrameworkInstallErr = frameworkInstall.Run()
 	
@@ -47,6 +53,8 @@ func MakeStart(projectName string, framework int64) (string, error) {
 			return "", errors.New(FrameworkInstallErr.Error())
 		}
 
+	default:
+		return "", errors.New("sorry, your framework is not supported")
 	}
 	
 	_, writeMainErr := mainFile.WriteString(mainContent)

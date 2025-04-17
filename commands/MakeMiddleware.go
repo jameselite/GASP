@@ -3,6 +3,7 @@ package commands
 import (
 	"errors"
 	"fmt"
+	"goTmp/helper"
 	"goTmp/start"
 	"os"
 )
@@ -27,16 +28,20 @@ func MakeMiddleware(name string) (string, error) {
 
 	if project.Framework == "gin" {
 
-		Content = fmt.Sprintf(MiddlewareTemplateGin, name)
+		Content = fmt.Sprintf(MiddlewareTemplateGin, helper.CapitalizeFirstLetter(name))
 
 	}
 
 	if project.Framework == "fiber" {
 
-		Content = fmt.Sprintf(MiddlewareTemplateFiber, name)
+		Content = fmt.Sprintf(MiddlewareTemplateFiber, helper.CapitalizeFirstLetter(name))
 
 	}
 
+	if project.Framework != "fiber" || project.Framework != "gin" {
+		return "", errors.New("sorry, your framework is not supported")
+	}
+ 
 	_, writeErr := middlewareFile.WriteString(Content)
 
 	if writeErr != nil {

@@ -36,11 +36,11 @@ func MakeController(router string, path string, controllerName string, method st
 		var controllerContent string
 
 		if project.Framework == "gin" {
-			controllerContent = fmt.Sprintf(ControllerTemplateGin, controllerName)
+			controllerContent = fmt.Sprintf(ControllerTemplateGin, helper.CapitalizeFirstLetter(controllerName))
 		}
 
 		if project.Framework == "fiber" {
-			controllerContent = fmt.Sprintf(ControllerTemplateFiber, controllerName)
+			controllerContent = fmt.Sprintf(ControllerTemplateFiber, helper.CapitalizeFirstLetter(controllerName))
 		}
 
 		_, writeErr := controller.WriteString(controllerContent)
@@ -178,6 +178,9 @@ func MakeController(router string, path string, controllerName string, method st
 		if err != nil {
 			return "", errors.New(err.Error())
 		}
+
+	default:
+		return "", errors.New("sorry, your architecture is not supported")
 	}
 
 	return "Controller " + controllerName + "created and added to your router !", nil 

@@ -3,12 +3,19 @@ package configfile
 import (
 	"errors"
 	"fmt"
+	"goTmp/start"
 	"os"
 
 	"os/exec"
 )
 
-func MakeConfig(dbNumber int64, dbname string, dbpass string, dbuser string) (string, error) {
+func MakeConfig() (string, error) {
+
+	project, tomlErr := start.ParseTOML()
+
+	if tomlErr != nil {
+		return "", errors.New(tomlErr.Error())
+	}
 
 	var dsn string
 
@@ -28,9 +35,9 @@ func MakeConfig(dbNumber int64, dbname string, dbpass string, dbuser string) (st
 		return "", errors.New(envFileErr.Error())
 	}
 
-	switch dbNumber {
+	switch project.Database {
 
-	case 1:
+	case "postgres":
 
 		var cmdDriver *exec.Cmd = exec.Command("go", "get", "github.com/jackc/pgx/v5/pgxpool")
 	
@@ -42,7 +49,7 @@ func MakeConfig(dbNumber int64, dbname string, dbpass string, dbuser string) (st
 			return "", errors.New(cmdDriverErr.Error())
 		}
 
-		dsn = fmt.Sprintf("postgres://%s:%s@localhost:5432/%s", dbuser, dbpass, dbname)
+		dsn = fmt.Sprintf("postgres://%s:%s@localhost:5432/%s", project.Database_user, project.Database_pass, project.Database_name)
 
 		PostgreConfig = fmt.Sprintf(PostgreConfig, "github.com/jackc/pgx/v5/pgxpool",
 		"*pgxpool.Pool",
@@ -65,7 +72,7 @@ func MakeConfig(dbNumber int64, dbname string, dbpass string, dbuser string) (st
 			return "", errors.New(writeErr.Error())
 		}
 
-	case 2:
+	case "mysql":
 
 		var cmdDriver *exec.Cmd = exec.Command("go", "get", "github.com/go-sql-driver/mysql")
 	
@@ -77,7 +84,7 @@ func MakeConfig(dbNumber int64, dbname string, dbpass string, dbuser string) (st
 			return "", errors.New(cmdDriverErr.Error())
 		}
 		
-		dsn = fmt.Sprintf("%s:%s@tcp(127.0.0.1:3306)/%s", dbuser, dbpass, dbname)
+		dsn = fmt.Sprintf("%s:%s@tcp(127.0.0.1:3306)/%s", project.Database_user, project.Database_pass, project.Projectname)
 
 		MySQLConfig = fmt.Sprintf(MySQLConfig, "database/sql", 
 		"github.com/go-sql-driver/mysql",

@@ -4,11 +4,18 @@ import (
 	"errors"
 	"fmt"
 	configfile "goTmp/config_file"
+	"goTmp/start"
 	"os"
 	"os/exec"
 )
 
-func MakeSqlc(dbnumber int64, dbdir string, projectname string) (string, error) {
+func MakeSqlc(dbdir string) (string, error) {
+
+	project, tomlErr := start.ParseTOML()
+
+	if tomlErr != nil {
+		return "", errors.New(tomlErr.Error())
+	}
 
 	var cmdSqlc *exec.Cmd = exec.Command("go", "install", "github.com/sqlc-dev/sqlc/cmd/sqlc@latest")
 
@@ -34,20 +41,20 @@ func MakeSqlc(dbnumber int64, dbdir string, projectname string) (string, error) 
 		return "", errors.New(queriesErr.Error())
 	}
 
-	switch dbnumber {
+	switch project.Database {
 
-	case 1:
+	case "postgres":
 		
-		var sqlcYamlTemp string = fmt.Sprintf(configfile.SqlcYamlPG, projectname, dbdir)
+		var sqlcYamlTemp string = fmt.Sprintf(configfile.SqlcYamlPG, project.Projectname, dbdir)
 
 		_, writeErr := sqlcFile.WriteString(sqlcYamlTemp)
 		if writeErr != nil {
 			return "", errors.New(writeErr.Error())
 		}
 
-	case 2:
+	case "mysql":
 		
-		var sqlcYamlTemp string = fmt.Sprintf(configfile.SqlcYamlPG, projectname, dbdir)
+		var sqlcYamlTemp string = fmt.Sprintf(configfile.SqlcYamlPG, project.Projectname, dbdir)
 
 		_, writeErr := sqlcFile.WriteString(sqlcYamlTemp)
 		if writeErr != nil {
