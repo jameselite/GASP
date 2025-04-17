@@ -40,7 +40,7 @@ func main() {
 var StartTemplateFiber string = `package main
 
 import (
-	%s
+	"%s"
 	"log"
 	"os"
 
