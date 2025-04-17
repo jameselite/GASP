@@ -29,28 +29,13 @@ To get started with this project, follow these steps:
   
   <br>
   
-  2. Download the binary based on your OS ( linux or windows )
-  
+  2. Run this command :
+  ```
+  go install github.com/jameselite/gasp@latest
+  ```   
+
   <br>
   
-  3. Install the app based on the instructions:
-
-  <br>
-  
-  On linux:
-
-  ```
-    sudo ./install.sh
-  ```
-     
-   On windows:
-   
-   <br>
-
-   ```
-   Just run the install.bat with administor
-   ```
-   
 ## Usage
 
 <br>
