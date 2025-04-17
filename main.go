@@ -46,6 +46,7 @@ func main() {
 
 	if len(args) == 1 {
 		ShowHelp()
+		return
 	}
 
 	switch args[1] {
