@@ -44,6 +44,10 @@ func main() {
 
 	args := os.Args
 
+	if len(args) == 1 {
+		ShowHelp()
+	}
+
 	switch args[1] {
 
 	case "-h", "--help":
@@ -70,8 +74,7 @@ func main() {
 	
 		var wantGit, wantRedis string
 
-		fmt.Println(`What database are you using?
-		type "postgres" for PostgreSQL, type "mysql" for MySQL : `)
+		fmt.Println("What database are you using?\ntype postgres for PostgreSQL, type mysql for MySQL : ")
 		fmt.Scan(&database)
 
 		fmt.Println("Enter the name of your database: ")
@@ -83,19 +86,19 @@ func main() {
 		fmt.Println("Enter the name of your database user: ")
 		fmt.Scan(&database_user)
 
-		fmt.Println("What framework do you want to use ? : \n Enter gin or fiber")
+		fmt.Println("What framework do you want to use ? : \nEnter gin or fiber")
 		fmt.Scan(&framework)
 
-		fmt.Println("What architecture do you want to use? : \n Enter layered or clean ")
+		fmt.Println("What architecture do you want to use? : \nEnter layered or clean ")
 		fmt.Scan(&arch)
 
-		fmt.Println("What is the version of your app ? \n Enter like this: 1.2.5 ")
+		fmt.Println("What is the version of your app ? \nEnter like this: 1.2.5 ")
 		fmt.Scan(&version)
 
-		fmt.Println("Do you want Git ? : \n Enter yes or no")
+		fmt.Println("Do you want Git ? : \nEnter yes or no")
 		fmt.Scan(&wantGit)
 
-		fmt.Println("Do you want Redis ? : \n Enter yes or no")
+		fmt.Println("Do you want Redis ? : \nEnter yes or no")
 		fmt.Scan(&wantRedis)
 
 		makeGaspToml, tomlErr := start.MakegaspTOML(framework, arch, version, database, database_pass, database_name, database_user)
@@ -105,14 +108,6 @@ func main() {
 		}
 
 		fmt.Println(makeGaspToml)
-
-		makeConfig, configErr := configfile.MakeConfig()
-		if configErr != nil {
-			fmt.Println(configErr.Error())
-			return
-		}
-
-		fmt.Println(makeConfig)
 
 		if wantGit == "yes" {
 
@@ -134,6 +129,14 @@ func main() {
 
 		fmt.Println(makeBased)
 
+		makeConfig, configErr := configfile.MakeConfig()
+		if configErr != nil {
+			fmt.Println(configErr.Error())
+			return
+		}
+
+		fmt.Println(makeConfig)
+		
 		switch arch {
 		case "layered":
 
@@ -188,7 +191,15 @@ func main() {
 
 		}
 
-		fmt.Println("Done !! \n Ready to go")
+		makeMain, mainErr := start.MakeStart()
+		if mainErr != nil {
+			fmt.Println(mainErr.Error())
+			return
+		}
+
+		fmt.Println(makeMain)
+
+		fmt.Println("Done !!\nReady to go")
 		return
 
 	case "add":
@@ -310,6 +321,10 @@ func main() {
 			fmt.Println(makeController)
 			return
 		}
+	default:
+
+		fmt.Println("Sorry, i did not recognize your command\nYou can run gasp -h or gasp --help to see all the commands.")
+		return
 	}
 	
 }

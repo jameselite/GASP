@@ -3,7 +3,7 @@ package start
 var StartTemplateGin string = `package main
 
 import (
-	%s
+	"%s"
 	"log"
 	"os"
 

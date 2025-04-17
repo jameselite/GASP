@@ -1,7 +1,6 @@
 package configfile
 
 var RedisTemplate string = `
-
 package config
 
 import (
@@ -13,7 +12,7 @@ import (
 
 var RedisClient *redis.Client
 
-func RedisClient() {
+func AddRedisClient() {
 
 	RedisClient = redis.NewClient(&redis.Options{
 		Addr: "localhost:6379",
